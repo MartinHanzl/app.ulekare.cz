@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'note',
+], function () {
+    Route::get('', [\App\Http\Controllers\Api\NoteController::class, 'index']);
+    Route::get('{id}', [\App\Http\Controllers\Api\NoteController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('{id?}', [\App\Http\Controllers\Api\NoteController::class, 'store']);
+    Route::delete('{id}', [\App\Http\Controllers\Api\NoteController::class, 'destroy'])->where('id', '[0-9]+');
 });

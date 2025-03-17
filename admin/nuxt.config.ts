@@ -26,7 +26,7 @@ export default defineNuxtConfig({
 			charset: 'utf-8',
 			viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
 			title: 'Diamond CRM',
-			titleTemplate: '%s | Diamond CRM',
+			titleTemplate: '%s | uLekare.cz',
 			htmlAttrs: {
 				lang: 'cs',
 			},
