@@ -20,13 +20,14 @@ class NoteController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Note::query();
-
-        if (request()->has('search')) {
-            $query->where('title', 'like', '%' . request('search') . '%');
+        if ($request->has('filter') && $request->get('filter') !== null) {
+            $query->where('priority', (int)$request->get('filter'));
         }
 
         if ($request->has('orderWay') && $request->has('orderBy')) {
             $query->orderBy($request->get('orderBy'), $request->get('orderWay'));
+        } else {
+            $query->orderBy('priority', 'desc');
         }
 
         return Response::json(NoteResource::collection($query->paginate(10)));
