@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('content')->nullable();
-            $table->enum('priority', ['high', 'medium', 'low'])->default('low');
+            $table->integer('priority')->default(1);
             $table->timestamps();
         });
     }

@@ -6,9 +6,9 @@ const error = ref(false);
 
 const toast = useToast();
 
-const items = ref([{ id: 1, name: 'Poznámka 1', content: 'Obsah poznámky 1', priority: 1 }]);
+const items = ref([]);
 const query = ref({
-	orderBy: 'id' as string,
+	orderBy: 'priority' as string,
 	orderWay: 'desc' as string,
 	filter: null as number | null,
 });
@@ -121,7 +121,7 @@ watch(() => query.value, () => {
 }, { deep: true });
 
 onMounted(() => {
-	// loadItems();
+	loadItems();
 });
 </script>
 
@@ -135,7 +135,7 @@ onMounted(() => {
 				{ key: 'id', name: 'ID', type: 'text', width: 80, hidden: false, sortable: true },
 				{ key: 'name', name: 'Název', type: 'text', width: 80, hidden: false, sortable: true },
 				{ key: 'content', name: 'Text', type: 'text', width: 80, hidden: false, sortable: true },
-				{ key: 'priority', name: 'Priorita', type: 'text', width: 80, hidden: false, sortable: true },
+				{ key: 'priority', name: 'Priorita', type: 'badge', width: 80, hidden: false, sortable: true },
 			]"
 			:actions="[
 				{ type: 'edit' },

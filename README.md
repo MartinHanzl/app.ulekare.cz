@@ -6,6 +6,8 @@
 <h2>Instalace</h2>
 <h3>Backend</h3>
 <ul>
+<li><strong>zkopírovat .env.example > .env</strong> (a nastavit podle potřeby)</li>
+<li><strong>composer-install</strong> - nainstaluje potřebné balíčky</li>
 <li><strong>docker-compose build</strong> - nastaví docker kontejner</li>
 <li><strong>docker-compose up</strong> - spustí docker kontejner</li>
 </ul>

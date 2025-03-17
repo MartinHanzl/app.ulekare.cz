@@ -80,7 +80,7 @@ const emit = defineEmits(['edit-item', 'delete-item', 'filter-table']);
 					class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
 				>
 					<option value="null">
-						Vyberte prioritu
+						Vše
 					</option>
           <option value="1">
 						Nízká
@@ -136,7 +136,12 @@ const emit = defineEmits(['edit-item', 'delete-item', 'filter-table']);
 									:key="index"
 									class="whitespace-nowrap py-4 px-3 text-sm font-medium text-gray-500"
 								>
-									{{ columns.type === 'text' || columns.type === 'number' ? item[columns.key] : '-' }}
+                  <p v-if="columns.type === 'text' || columns.type === 'number'">
+                    {{ item[columns.key] ?? '-' }}
+                  </p>
+                  <p v-if="columns.type === 'badge'">
+                    <PropsBadge :priority="item[columns.key]" />
+                  </p>
 								</td>
 								<td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 flex gap-x-4 justify-end">
 									<span
@@ -164,7 +169,7 @@ const emit = defineEmits(['edit-item', 'delete-item', 'filter-table']);
 						Při načítání dat nastala chyba.
 					</p>
 					<p
-						v-else
+						v-else-if="loading && !error"
 						class="mt-2 text-sm text-gray-700"
 					>
 						{{ plural }} se načítají

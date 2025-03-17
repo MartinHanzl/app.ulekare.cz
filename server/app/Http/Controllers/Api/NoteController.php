@@ -20,7 +20,7 @@ class NoteController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Note::query();
-        if ($request->has('filter') && $request->get('filter') !== null) {
+        if ($request->has('filter') && $request->get('filter') !== null && $request->get('filter') !== 'null') {
             $query->where('priority', (int)$request->get('filter'));
         }
 
@@ -30,7 +30,7 @@ class NoteController extends Controller
             $query->orderBy('priority', 'desc');
         }
 
-        return Response::json(NoteResource::collection($query->paginate(10)));
+        return Response::json(NoteResource::collection($query->get()));
     }
 
     /**
