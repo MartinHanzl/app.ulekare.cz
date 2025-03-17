@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = Note::query();
@@ -20,56 +18,73 @@ class NoteController extends Controller
             $query->orderBy('priority', 'desc');
         }
 
-        return view('notes.index', [
-            'notes' => $query->get(),
+        return view('index', [
+            'notes' => []
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('edit', [
+            'note' => new Note()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show(int $id = null)
     {
-        //
+        if ($id) {
+            $note = Note::find($id);
+            if (!$note) {
+                return redirect()->route('index', ['error' => 'Poznámka nebyla nalezena']);
+            }
+        } else {
+            $note = new Note();
+        }
+
+        return view('show', [
+            'note' => $note
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(Request $request, int $id = null)
     {
-        //
+        if ($id) {
+            $note = Note::find($id);
+            if (!$note) {
+                return redirect()->route('index', ['error' => 'Poznámka nebyla nalezena']);
+            }
+        } else {
+            $note = new Note();
+        }
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'priority' => 'required|integer|min:1|max:3'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('show', ['id' => $id])->withErrors($validator);
+        }
+
+        $note->fill($request->all());
+        $note->save();
+
+        return redirect()->route('index', ['success' => 'Poznámka byla uložena']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy(int $id)
     {
-        //
-    }
+        if (!$id) {
+            return redirect()->route('index', ['error' => 'Poznámka nebyla nalezena']);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $note = Note::find($id);
+        if (!$note) {
+            return redirect()->route('index', ['error' => 'Poznámka nebyla nalezena']);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $note->delete();
+
+        return redirect()->route('index', ['success' => 'Poznámka byla smazána']);
     }
 }

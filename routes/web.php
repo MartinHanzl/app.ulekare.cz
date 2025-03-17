@@ -13,13 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::group([
-    'prefix' => 'notes',
-], function () {
-    Route::get('', [\App\Http\Controllers\NoteController::class, 'index'])->name('notes.index');
-    Route::get('/create', [\App\Http\Controllers\NoteController::class, 'create'])->name('notes.create');
-});
+Route::get('/', [\App\Http\Controllers\NoteController::class, 'index']);
+Route::get('/poznamka/{id?}', [\App\Http\Controllers\NoteController::class, 'show'])->name('poznamka');
+Route::post('/update/{id?}', [\App\Http\Controllers\NoteController::class, 'store'])->name('update');
+Route::delete('/delete/{id}', [\App\Http\Controllers\NoteController::class, 'destroy'])->name('delete')->where('id', '[0-9]+');
