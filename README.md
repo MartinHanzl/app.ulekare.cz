@@ -6,14 +6,14 @@
 <h2>Instalace</h2>
 <h3>Backend</h3>
 <ul>
-<li>`docker-compose build` - nastaví docker kontejner</li>
-<li>`docker-compose up` - spustí docker kontejner</li>
+<li><strong>docker-compose build</strong> - nastaví docker kontejner</li>
+<li><strong>docker-compose up</strong> - spustí docker kontejner</li>
 </ul>
 
 <h3>Frontend</h3>
 <ul>
-<li>`npm install` - nainstaluje potřebné balíčky</li>
-<li>`npm run dev` - spustí vývojový server</li>
+<li><strong>npm install</strong> - nainstaluje potřebné balíčky</li>
+<li><strong>npm run dev</strong> - spustí vývojový server</li>
 </ul>
 
 <h2>Požadavky</h3>
@@ -26,6 +26,6 @@
 
 <h3>Frontend</h3>
 <ul>
-<li>Node.js v. 18 a vyšší</li>
+<li>Node.js v. 22 a vyšší</li>
 <li>NPM</li>
 </ul>
